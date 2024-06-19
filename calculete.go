@@ -3,37 +3,37 @@ package main
 func Calculate(a, b int, op string) int {
 	switch op {
 	case "add":
-		return add(a, b)
+		return Add(a, b)
 	case "sub":
-		return sub(a, b)
+		return Sub(a, b)
 	case "mul":
-		return mul(a, b)
+		return Mul(a, b)
 	case "div":
-		return div(a, b)
+		return Div(a, b)
 	case "mod":
-		return mod(a, b)
+		return Mod(a, b)
 	default:
 		return 0
 	}
 }
 
-func add(a, b int) int {
+func Add(a, b int) int {
 	return a + b
 }
 
-func sub(a, b int) int {
+func Sub(a, b int) int {
 	return a - b
 }
 
-func mul(a, b int) int {
+func Mul(a, b int) int {
 	return a * b
 }
 
-func div(a, b int) int {
+func Div(a, b int) int {
 	return a / b
 }
 
-func mod(a, b int) int {
+func Mod(a, b int) int {
 	if b == 0 {
 		return 0
 	}

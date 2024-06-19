@@ -36,14 +36,14 @@ func SimulationCPU() {
 	fmt.Printf("Calculating primes between %d and %d...\n", start, end)
 	startTime := time.Now()
 
-	primes := calculatePrimes(start, end)
+	primes := CalculatePrimes(start, end)
 
 	duration := time.Since(startTime)
 	fmt.Printf("Found %d primes.\n", len(primes))
 	fmt.Printf("Calculation took %s\n", duration)
 }
 
-func isPrime(n int) bool {
+func IsPrime(n int) bool {
 	if n <= 1 {
 		return false
 	}
@@ -56,10 +56,10 @@ func isPrime(n int) bool {
 }
 
 // calculatePrimes 计算给定范围内的所有素数
-func calculatePrimes(start, end int) []int {
+func CalculatePrimes(start, end int) []int {
 	var primes []int
 	for i := start; i <= end; i++ {
-		if isPrime(i) {
+		if IsPrime(i) {
 			primes = append(primes, i)
 		}
 	}
@@ -80,7 +80,7 @@ func SimulationIO() {
 	// 启动多个并发的文件操作
 	for i := 0; i < numFiles; i++ {
 		wg.Add(1)
-		go createAndWriteFile(fmt.Sprintf("file-%d.tmp", i), data, &wg)
+		go CreateAndWriteFile(fmt.Sprintf("file-%d.tmp", i), data, &wg)
 	}
 
 	// 等待所有文件操作完成
@@ -105,7 +105,7 @@ const (
 	taskBatch = 10000   // 每批次创建的任务数量
 )
 
-func createAndWriteFile(filename string, data []byte, wg *sync.WaitGroup) {
+func CreateAndWriteFile(filename string, data []byte, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	// 创建文件
@@ -142,7 +142,7 @@ func SimulationWaitForCPU() {
 	// 启动大量的 goroutine
 	for i := 0; i < numGoroutines; i++ {
 		wg.Add(1)
-		go worker(i, &wg)
+		go Worker(i, &wg)
 	}
 
 	// 等待所有 goroutine 完成
@@ -152,7 +152,7 @@ func SimulationWaitForCPU() {
 	fmt.Printf("All goroutines finished in %s\n", duration)
 }
 
-func worker(id int, wg *sync.WaitGroup) {
+func Worker(id int, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	// 模拟一些工作
@@ -184,7 +184,7 @@ func SimulationShortTasks() {
 	// 启动大量的短任务
 	for i := 0; i < numTasks; i++ {
 		wg.Add(1)
-		go shortTask(&wg, ch)
+		go ShortTask(&wg, ch)
 		// 等待通道有空位
 		ch <- struct{}{}
 	}
@@ -199,7 +199,7 @@ func SimulationShortTasks() {
 	fmt.Printf("All tasks finished in %s\n", duration)
 }
 
-func shortTask(wg *sync.WaitGroup, ch chan struct{}) {
+func ShortTask(wg *sync.WaitGroup, ch chan struct{}) {
 	defer wg.Done()
 
 	// 模拟短时间的计算任务
