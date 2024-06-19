@@ -14,8 +14,8 @@ COPY . .
 # 构建 Go 应用程序，包含所有源文件
 RUN go build -o main .
 
-# 使用一个更小的镜像来运行应用程序
-FROM debian:bullseye-slim
+# 使用一个alpine镜像来运行应用程序
+FROM alpine:latest
 
 # 设置工作目录
 WORKDIR /app
