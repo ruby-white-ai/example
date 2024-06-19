@@ -15,7 +15,7 @@ RUN go mod download
 COPY . .
 
 # 构建 Go 应用程序，包含所有源文件
-RUN go build -o main .
+RUN go build -o example-test .
 
 # 使用一个alpine镜像来运行应用程序
 FROM alpine:latest
@@ -24,13 +24,13 @@ FROM alpine:latest
 WORKDIR /app
 
 # 从builder镜像复制构建好的二进制文件
-COPY --from=builder /app/main .
+COPY --from=builder /app/example-test .
 
 # 确保二进制文件可执行
-RUN chmod +x ./main
+RUN chmod +x ./example-test
 
 # 暴露应用程序端口
 EXPOSE 8080
 
 # 启动应用程序
-CMD ["./main"]
+CMD ["./example-test"]
