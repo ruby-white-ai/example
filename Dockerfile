@@ -1,32 +1,30 @@
-# Start with the official Golang image
+# 使用官方的golang镜像作为构建镜像
 FROM golang:1.20 AS builder
 
-# Set the Current Working Directory inside the container
+# 设置工作目录
 WORKDIR /app
 
-# Copy go.mod and go.sum files
+# 复制 go.mod 和 go.sum 并下载依赖
 COPY go.mod go.sum ./
-
-# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
-# Copy the source code into the container
+# 复制其余的*.go文件到工作目录
 COPY . .
 
-# Build the Go app
-RUN go build -o main ./cmd
+# 构建 Go 应用程序，包含所有源文件
+RUN go build -o main .
 
-# Start a new stage from scratch
+# 使用一个更小的镜像来运行应用程序
 FROM debian:bullseye-slim
 
-# Set the Current Working Directory inside the container
+# 设置工作目录
 WORKDIR /app
 
-# Copy the Pre-built binary file from the previous stage
+# 从builder镜像复制构建好的二进制文件
 COPY --from=builder /app/main .
 
-# Expose port 8080 to the outside world
+# 暴露应用程序端口
 EXPOSE 8080
 
-# Command to run the executable
+# 启动应用程序
 CMD ["./main"]

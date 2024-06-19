@@ -9,7 +9,7 @@ func main() {
 	r.GET("/calculate", HandlerCalculation)
 	r.GET("/simulate", HandlerSimulation)
 
-	r.Run(":1235")
+	r.Run(":8080")
 }
 
 func HandlerCalculation(c *gin.Context) {
