@@ -19,8 +19,8 @@ func SimulationSwitch(op string) {
 		SimulationIO()
 	case "wait":
 		SimulationWaitForCPU()
-	case "short":
-		SimulationShortTasks()
+	case "crash":
+		SimulateCrashingProcess()
 	default:
 		SimulationCPU()
 	}
@@ -210,4 +210,23 @@ func ShortTask(wg *sync.WaitGroup, ch chan struct{}) {
 
 	// 向通道发送完成信号
 	ch <- struct{}{}
+}
+
+func SimulateCrashingProcess() {
+	// 随机运行一段时间
+	rand.Seed(time.Now().UnixNano())
+	runTime := rand.Intn(10) + 1 // 随机运行1到10秒
+	fmt.Printf("进程将运行 %d 秒...\n", runTime)
+
+	// 模拟进程运行
+	time.Sleep(time.Duration(runTime) * time.Second)
+
+	// 随机决定是否崩溃
+	if rand.Intn(2) == 0 { // 50% 概率崩溃
+		fmt.Println("进程崩溃！")
+		os.Exit(1) // 非正常退出状态
+	}
+
+	// 如果没有崩溃，正常结束
+	fmt.Println("进程正常结束。")
 }
